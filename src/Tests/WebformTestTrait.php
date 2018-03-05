@@ -18,6 +18,13 @@ use Drupal\webform\WebformInterface;
 trait WebformTestTrait {
 
   /**
+   * Webforms to load.
+   *
+   * @var array
+   */
+  protected static $testWebforms = [];
+
+  /**
    * {@inheritdoc}
    */
   public function setUp() {
