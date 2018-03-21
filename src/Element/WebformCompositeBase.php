@@ -120,20 +120,21 @@ abstract class WebformCompositeBase extends FormElement implements WebformCompos
         continue;
       }
 
-      // Get element plugin and set #default_value and #parents for inputs.
+      // Set parents.
+      $composite_element['#parents'] = array_merge($element['#parents'], [$composite_key]);
+
+      // If the element's #access is FALSE, apply it to all sub elements.
+      if ($element['#access'] === FALSE) {
+        $composite_element['#access'] = FALSE;
+      }
+
+      // Get element plugin and set inputs #default_value.
       $element_plugin = $element_manager->getElementInstance($composite_element);
       if ($element_plugin->isInput($composite_element)) {
         // Set #default_value for sub elements.
         if (isset($element['#value'][$composite_key])) {
           $composite_element['#default_value'] = $element['#value'][$composite_key];
         }
-        // Set parents.
-        $composite_element['#parents'] = array_merge($element['#parents'], [$composite_key]);
-      }
-
-      // If the element's #access is FALSE, apply it to all sub elements.
-      if ($element['#access'] === FALSE) {
-        $composite_element['#access'] = FALSE;
       }
 
       // Build the webform element.
